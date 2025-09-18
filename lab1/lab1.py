@@ -3,7 +3,14 @@ import numpy as np
 SEED = 123
 
 
-def generate_uniform_distribution(low: int, high: int, seed: int | None = None) -> float:
+def generate_uniform_distribution(low: int, high: int, seed: int | None = None) -> np.ndarray:
+    """
+    Функция для генерации выборки из равномерного закона распределения на интервале от [0, high)
+    :param low:
+    :param high:
+    :param seed:
+    :return: np.ndarray
+    """
     ran_gen = np.random.default_rng(seed)
     return ran_gen.random(high)
 
