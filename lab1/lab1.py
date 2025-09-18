@@ -46,6 +46,6 @@ print("min>=0?", float(s.min()) >= 0.0)
 print("max<=1?", float(s.max()) <= 1.0)
 print("пример:", s[:5])
 
-x_sort, y_ecdf = ecdf_points(s)
+x_sort, Fn_x = ecdf_points(s)
 print("Неубывающая", (np.all(np.diff(x_sort) >= 0)))
-print(y_ecdf[:5])
+print(Fn_x[:5])
