@@ -6,12 +6,18 @@ SEED = 123
 def generate_uniform_distribution(low: int, high: int, seed: int | None = None) -> np.ndarray:
     """
     Функция для генерации выборки из равномерного закона распределения на интервале от [0, high)
-    :param low:
-    :param high:
-    :param seed:
-    :return: np.ndarray
+
+    Args:
+        low: нижняя граница (TODO сделать возможность прописывать нижнюю границу)
+        high: верхняя граница
+        seed: сид генерации случайных чисел
+
     """
-    ran_gen = np.random.default_rng(seed)
+    if seed is None:
+        ran_gen = np.random.default_rng()
+    else:
+        ran_gen = np.random.default_rng(seed)
+
     return ran_gen.random(high)
 
 s = generate_uniform_distribution(0, 1, seed=SEED)
