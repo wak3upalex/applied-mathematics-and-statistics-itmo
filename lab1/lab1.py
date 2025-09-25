@@ -75,18 +75,35 @@ def plot_ecdf_vs_theory(sample: np.ndarray, title: str = "") -> None:
     plt.show()
 
 def plot_hist_vs_theory(sample: np.ndarray, title: str = "") -> None:
-    # размер выборки n
     n = len(sample)
-    bins = max(1, n // 10)         # число полос = n/10
+    bins = max(1, n // 10)  # число полос = n/10
+
+    # границы по выборке
+    lo = float(np.min(sample))
+    lo = float
+    hi = float(np.max(sample))
+    if hi == lo:
+        hi = lo + 1e-12
+
     plt.figure()
-    # density = True – высота столбцов оценивает плотность. Нормируем так, чтобы площадь под гистограммой была 1. Тогда высота столбца ≈ оценка плотности на этом интервале.
-    plt.hist(sample, bins=bins, range=(0,1), density=True, edgecolor="black", alpha=0.6, label=f"Гистограмма (bins={bins})")
-    # Теоретическая плотность f(x)=1 на [0,1]
-    plt.plot([0, 1], [1, 1], label="Теоретическая f(x)=1")
-    plt.xlim(0, 1)
+    # строим гистограмму на [lo, hi]
+    plt.hist(
+        sample,
+        bins=bins,
+        range=(lo, hi),
+        density=True,                # нормировка в плотность
+        edgecolor="black",
+        alpha=0.6,
+        label=f"Гистограмма (bins={bins})",
+    )
+
+    # теоретическая плотность равномерного на [0,1] — единица
+    plt.plot([lo, hi], [1, 1], label="Теоретическая f(x)=1")
+
+    plt.xlim(lo, hi)
     plt.xlabel("x")
     plt.ylabel("Оценка плотности")
-    plt.title(title or f"Гистограмма vs f(x)=1 ")
+    plt.title(title or f"Гистограмма vs f(x)=1")
     plt.legend()
     plt.tight_layout()
     plt.show()
