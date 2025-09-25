@@ -74,6 +74,22 @@ def plot_ecdf_vs_theory(sample: np.ndarray, title: str = "") -> None:
     plt.legend()
     plt.show()
 
+def plot_hist_vs_theory(sample: np.ndarray, title: str = "") -> None:
+    # размер выборки n
+    n = len(sample)
+    bins = max(1, n // 10)         # число полос = n/10
+    plt.figure()
+    # density = True – высота столбцов оценивает плотность. Нормируем так, чтобы площадь под гистограммой была 1. Тогда высота столбца ≈ оценка плотности на этом интервале.
+    plt.hist(sample, bins=bins, range=(0,1), density=True, edgecolor="black", alpha=0.6, label=f"Гистограмма (bins={bins})")
+    # Теоретическая плотность f(x)=1 на [0,1]
+    plt.plot([0, 1], [1, 1], label="Теоретическая f(x)=1")
+    plt.xlim(0, 1)
+    plt.xlabel("x")
+    plt.ylabel("Оценка плотности")
+    plt.title(title or f"Гистограмма vs f(x)=1 ")
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
 
 for n in [10 ** 1, 10 ** 2, 10 ** 3, 10 ** 4]:
     # генерируем выборку
@@ -87,3 +103,4 @@ for n in [10 ** 1, 10 ** 2, 10 ** 3, 10 ** 4]:
     x_sort, Fn_x = ecdf_points(s)
     print("Неубывающая", (np.all(np.diff(x_sort) >= 0)))
     plot_ecdf_vs_theory(s, f"ECDF vs F(x)=x, n={n}")
+    plot_hist_vs_theory(s, f"Гистограмма vs F(x)=x, n={n}")
